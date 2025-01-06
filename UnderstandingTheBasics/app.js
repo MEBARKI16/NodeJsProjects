@@ -1,8 +1,17 @@
 const http = require('http');
 
-// Créer un serveur HTTP
 http.createServer((req, res) => {
-    console.log(req.url, req.method, req.headers); // Affiche "hello" dans la console à chaque requête
+    console.log(req.url, req.method, req.headers);
+    res.setHeader('Content-Type', 'text/html');
+    res.write(`<html>
+        <head>
+        <title>Mon Serveur Node JS</title>
+        </head>
+        <body> 
+         <p style="color:red">hello world</p>
+        </body>
+      </html>`)
+    res.end();
 }).listen(3000, () => {
-    console.log('Serveur démarré sur le port 3000'); // Indiquer que le serveur est prêt
+    console.log('Serveur démarré sur le port 3000');
 });
