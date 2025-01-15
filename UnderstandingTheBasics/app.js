@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 
 http.createServer((req, res) => {
     const url = req.url;
@@ -19,7 +20,7 @@ http.createServer((req, res) => {
         `);
         return res.end();
     }
-    let parseBody = null;
+
     if (url === '/message' && method === 'POST') {
         const body = [];
         req.on('data', (x) => {
@@ -27,9 +28,14 @@ http.createServer((req, res) => {
             body.push(x);
         });
         req.on('end', () => {
-             parseBody = Buffer.concat(body).toString();
-            console.log(parseBody);
+            const parseBody = Buffer.concat(body).toString();
+            const message = parseBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            return res.end();
         })
+
     }
     res.setHeader('Content-Type', 'text/html');
     res.write(`
@@ -38,7 +44,7 @@ http.createServer((req, res) => {
                 <title>My First Page</title>
             </head>
             <body>
-                <h1>Hello ${parseBody} from my Node js Server</h1>
+                <h1>Hello from my Node js Server</h1>
             </body>
         </html>
     `);
