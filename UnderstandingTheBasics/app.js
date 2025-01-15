@@ -2,6 +2,7 @@ const http = require('http');
 
 http.createServer((req, res) => {
     const url = req.url;
+    const method = req.method;
     if (url === '/') {
         res.write(`
         <html>
@@ -18,6 +19,18 @@ http.createServer((req, res) => {
         `);
         return res.end();
     }
+    let parseBody = null;
+    if (url === '/message' && method === 'POST') {
+        const body = [];
+        req.on('data', (x) => {
+            console.log(x);
+            body.push(x);
+        });
+        req.on('end', () => {
+             parseBody = Buffer.concat(body).toString();
+            console.log(parseBody);
+        })
+    }
     res.setHeader('Content-Type', 'text/html');
     res.write(`
         <html>
@@ -25,7 +38,7 @@ http.createServer((req, res) => {
                 <title>My First Page</title>
             </head>
             <body>
-                <h1>Hello from my Node js Server!</h1>
+                <h1>Hello ${parseBody} from my Node js Server</h1>
             </body>
         </html>
     `);
