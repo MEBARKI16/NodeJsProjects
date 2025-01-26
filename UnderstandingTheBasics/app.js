@@ -30,10 +30,10 @@ http.createServer((req, res) => {
         req.on('end', () => {
             const parseBody = Buffer.concat(body).toString();
             const message = parseBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
-            res.statusCode = 302;
+            fs.writeFile('message.txt', message , (err) => {res.statusCode = 302;
             res.setHeader('Location', '/');
-            return res.end();
+            return res.end();});
+            
         })
 
     }
@@ -49,6 +49,6 @@ http.createServer((req, res) => {
         </html>
     `);
     res.end();
-}).listen(3000, () => {
+}).listen(3005, () => {
     console.log('Serveur démarré sur le port 3000');
 });
