@@ -13,7 +13,7 @@ http.createServer((req, res) => {
             <body>
                 <form action="/message" method="POST">
                     <input type="text" name="message" />
-                    <button type="submit">soummetre</button>
+                    <button type="submit">Valider</button>
                 </form>
             </body>
         </html>
