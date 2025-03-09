@@ -1,0 +1,26 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Environnements et secrets
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs et fichiers temporaires
+logs/
+*.log
+yarn-error.log
+*.pid
+*.seed
+*.csv
+.DS_Store
+
+# Systèmes et éditeurs (VS Code, macOS, Windows)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+Thumbs.db
